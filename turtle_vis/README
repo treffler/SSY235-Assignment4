@@ -1,0 +1,9 @@
+1) roslaunch turtle_vis TurtleVis.launch
+ 
+2) rosservice call /TurtlePose "p:
+  	x: 2.0
+  	y: 2.0
+  	theta: 1.57"   
+
+3) rosrun turtle_vis turtle_set_position_node
+(cm, cm, rad)
