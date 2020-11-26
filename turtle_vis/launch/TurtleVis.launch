@@ -9,7 +9,8 @@
 
 
   <!--#>>>>TODO: load the yaml file control_param.yaml-->
-
+  <rosparam file="$(find turtle_vis)/config/control_param.yaml" />
+  
   <!--#>>>>TODO:LAUNCH TURTLE CONTROL NODE.-->
  
 </launch>
