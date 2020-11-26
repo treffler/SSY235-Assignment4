@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 
   // Topic
   ros::Publisher desired_pose_pub = n.advertise<
-      DESIRED_POSE_TOPIC_TYPE::float /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+      DESIRED_POSE_TOPIC_TYPE::double /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
       "turtle_control", 100);
 
   Matrix3d Kp;
