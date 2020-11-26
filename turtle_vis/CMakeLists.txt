@@ -30,24 +30,26 @@ add_definitions(${EIGEN_DEFINITIONS})
 # Messages, Services and Actions
 ##########################################################################
 ##>>>>TODO: Generate messages in the 'msg' folder
-#add_message_files(
-#    DIRECTORY msg
-#    FILES
-#     #>>>>TODO: ADD THE MSG FILES
-#    )
+add_message_files(
+    DIRECTORY msg
+    FILES
+     #>>>>TODO: ADD THE MSG FILES
+	 DesiredPose.msg # desired pose of the turtle
+    )
 ##>>>>TODO: Generate services in the 'srv' folder
-#add_service_files(
-#    DIRECTORY srv
-#    FILES
-#    #>>>>TODO: ADD THE SERVICE FILES
-#    )
+add_service_files(
+    DIRECTORY srv
+    FILES
+    #>>>>TODO: ADD THE SERVICE FILES
+	TurtlePose.svc
+    )
 
 
 ##>>>>TODO:Generate added messages and services with any dependencies listed here
-#generate_messages(
-#    DEPENDENCIES
-#    std_msgs
-#    )
+generate_messages(
+    DEPENDENCIES
+    std_msgs
+    )
 
 
 ###################################
