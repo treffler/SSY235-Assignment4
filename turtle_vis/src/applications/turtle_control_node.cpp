@@ -52,9 +52,10 @@ int main(int argc, char **argv) {
   turtleSpace::TurtleClass turtleF;
   ros::ServiceServer service = n.advertiseService(
       "TurtlePose",
-      &turtleSpace::TurtleClass::getDPose() //#>>>>TODO: DEFINE THE
-                                            // CALLBACK FUNCTION,
-          & turtleF);
+      &turtleSpace::TurtleClass::getDPose(), //#>>>>TODO: DEFINE THE
+                                             // CALLBACK FUNCTION -> correct
+                                             // function?
+      &turtleF);
   // CALL SERVICE FROM TERMINAL//
   //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
   //    rosservice call /TurtlePose "{p: {x: 1.5, y: 1.0, theta: 0.0}}"
@@ -110,7 +111,7 @@ int main(int argc, char **argv) {
   turtlePose_desired_local = turtlePose;
 
   // CREATE A DESIRED POSE MSG VARIABLE
-  turtle_vis::float desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
+  turtle_vis::Vector3d desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
 
   while (ros::ok()) {
 

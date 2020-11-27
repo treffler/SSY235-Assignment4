@@ -22,14 +22,13 @@ namespace turtleSpace {
 TurtleClass::TurtleClass() {
   //#>>>>TODO: INITIALIZE MEMBER VARIABLES
   count_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-  turtlePose_ = new Vector3D(0.0,0.0,0.0);
-  turtlePose_desired_ = new Vector3D(0.0,0.0,0.0);
-
+  turtlePose_ = new Vector3D(0.0, 0.0, 0.0);
+  turtlePose_desired_ = new Vector3D(0.0, 0.0, 0.0);
 }
 TurtleClass::~TurtleClass() {}
 
 void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg) {
-  float local_msg;
+  Vector3d local_msg;
   pthread_mutex_lock(&count_mutex_);
   //#>>>>TODO: COPY THE MSG TO A LOCAL VARIABLE
   local_msg = msg;
