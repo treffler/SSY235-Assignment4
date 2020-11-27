@@ -52,8 +52,8 @@ int main(int argc, char **argv) {
   turtleSpace::TurtleClass turtleF;
   ros::ServiceServer service = n.advertiseService(
       "TurtlePose",
-      &turtleSpace::TurtleClass::CALLBACKFUNCTION //#>>>>TODO: DEFINE THE
-                                                  // CALLBACK FUNCTION,
+      &turtleSpace::TurtleClass::getDPose() //#>>>>TODO: DEFINE THE
+                                            // CALLBACK FUNCTION,
           & turtleF);
   // CALL SERVICE FROM TERMINAL//
   //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
@@ -62,7 +62,8 @@ int main(int argc, char **argv) {
 
   // Topic
   ros::Publisher desired_pose_pub = n.advertise<
-      DESIRED_POSE_TOPIC_TYPE::double /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+      DESIRED_POSE_TOPIC_TYPE::
+          Vector3d /*#>>>>TODO: DEFINE THE MSG TYPE -> double or Vector3d?? */>(
       "turtle_control", 100);
 
   Matrix3d Kp;
@@ -104,7 +105,7 @@ int main(int argc, char **argv) {
   // Target
   Vector3d turtlePose_desired_local;
   ////#>>>>TODO: INITIALIZE THE DESIRED POSE VARIABLE OF THE CLASS TURTLE
-  turtleF.CALL_METHOD_TO_SET_DESIRED_POSE(turtlePose);
+  turtleF.setLocalDesiredPose(turtlePose);
 
   turtlePose_desired_local = turtlePose;
 
@@ -119,22 +120,22 @@ int main(int argc, char **argv) {
     dt = tf.toSec() - ti.toSec();
 
     ////#>>>>TODO: Get Desired Pose from the class variable
-    turtlePose_desired_local =
-        turtleF.CALL_THE_METHOD_TO_OBTAIN_THE_DESIRED_POSE();
+    turtlePose_desired_local = turtleF.getLocalDesiredPose();
+    // turtleF.CALL_THE_METHOD_TO_OBTAIN_THE_DESIRED_POSE();
 
     // Control
     ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
-    error = turtlePose - turtlePose_desired_local;
+    error = turtlePose_old - turtlePose_desired_local;
     turtleVel = -Kp * error;
 
     ////#>>>>TODO:COMPUTE THE NEW TURTLE POSE
-    turtlePose += turtleVel * dt; // USE SIMPLE INTEGRATION
+    turtlePose = turtlePose_old + turtleVel * dt; // USE SIMPLE INTEGRATION
 
     turtleF.setLocalPose(turtlePose);
 
     // Publish Data
     ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
-
+    desired_pose_msg = turtlePose_desired_local;
     desired_pose_pub.publish(desired_pose_msg);
 
     // SET THE HISTORY
