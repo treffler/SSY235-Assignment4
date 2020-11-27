@@ -7,3 +7,14 @@
 
 3) rosrun turtle_vis turtle_set_position_node
 (cm, cm, rad)
+
+
+Exercise 3:
+1)  How can I send the new desired pose of the turtle (x_d, y_d, theta_d) to Node1?
+    To send a message from the Server to the Client, the command n.advertiseService("TurtlePose", &turtleSpace::TurtleClass::getDPose(), &turtleF) is used. It will create the service that sends the function to obtain the current pose from a turtle object as well as the turtle object to the client.
+
+2)  What is the main difference between a Publisher/Subscriber and Service/Client?
+    Publisher/Subscriber is an interface for asynchronous communication while Service/Client is for synchronous communication.
+    A Publisher continuously publishes messages to a topic and any Subscriber that is subscribed to the topic can read the message, therefore the communication is a continuous one-to-many communication. Services on the other hand only sends a message when a client requests it. Service/Client is a one time one-to-one communication.
+
+    If the Service was replaced with a Subscriber in Node1, we could not guarantee that the position that Node1 receives is the current desired pose. since the subscriber can only read the data that was last published to the topic.
