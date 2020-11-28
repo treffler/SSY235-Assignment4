@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
 
   // Topic
   ros::Publisher desired_pose_pub =
-      n.advertise<std_msgs::double /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+      n.advertise<turtle_vis::float64 /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
           "turtle_control", 100);
 
   Matrix3d Kp;
@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
   turtlePose_desired_local = turtlePose;
 
   // CREATE A DESIRED POSE MSG VARIABLE
-  turtle_vis::Vector3d desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
+  turtle_vis::float64 desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
 
   while (ros::ok()) {
 
@@ -121,7 +121,6 @@ int main(int argc, char **argv) {
 
     ////#>>>>TODO: Get Desired Pose from the class variable
     turtlePose_desired_local = turtleF.getLocalDesiredPose();
-    // turtleF.CALL_THE_METHOD_TO_OBTAIN_THE_DESIRED_POSE();
 
     // Control
     ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
@@ -135,7 +134,7 @@ int main(int argc, char **argv) {
 
     // Publish Data
     ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
-    desired_pose_msg = turtlePose_desired_local;
+    desired_pose_msg.data(turtlePose_desired_local);
     desired_pose_pub.publish(desired_pose_msg);
 
     // SET THE HISTORY
