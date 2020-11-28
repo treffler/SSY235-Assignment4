@@ -34,12 +34,14 @@ add_definitions(${EIGEN_DEFINITIONS})
 #    DIRECTORY msg
 #    FILES
 #     #>>>>TODO: ADD THE MSG FILES
+#    std_msgs.msg
 #    )
 ##>>>>TODO: Generate services in the 'srv' folder
 #add_service_files(
 #    DIRECTORY srv
 #    FILES
 #    #>>>>TODO: ADD THE SERVICE FILES
+#    std_srvs.srv
 #    )
 
 
@@ -49,6 +51,10 @@ add_definitions(${EIGEN_DEFINITIONS})
 #    std_msgs
 #    )
 
+#generate_messages(
+#    DEPENDENCIES
+#    std_srvs
+#    )
 
 ###################################
 ## catkin specific configuration ##
