@@ -79,9 +79,11 @@ int main(int argc, char **argv) {
   //#>>>>TODO: LOAD p_gain FROM THE ROS PARAMETER SERVER
 
   // LOAD p_gain FROM THE ROS PARAMETER SERVER
-  if (ros::param::has("control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER*/)) {
+  if (ros::param::has(
+          "/control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER*/)) {
     ros::param::get(
-        "control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER, SAME AS LINE 88*/,
+        "/control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER, SAME AS LINE 88*/
+        ,
         p);
     ROS_INFO_STREAM("p gain= " << p);
   } else {
@@ -134,7 +136,7 @@ int main(int argc, char **argv) {
 
     // Publish Data
     ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
-    desired_pose_msg.data(turtlePose_desired_local);
+    desired_pose_msg.data = turtlePose_desired_local;
     desired_pose_pub.publish(desired_pose_msg);
 
     // SET THE HISTORY
