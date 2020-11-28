@@ -62,10 +62,9 @@ int main(int argc, char **argv) {
   // DON'T FORGET TO SOURCE THE WORKSPACE BEFORE CALLING THE SERVICE
 
   // Topic
-  ros::Publisher desired_pose_pub = n.advertise<
-      DESIRED_POSE_TOPIC_TYPE::
-          Vector3d /*#>>>>TODO: DEFINE THE MSG TYPE -> double or Vector3d?? */>(
-      "turtle_control", 100);
+  ros::Publisher desired_pose_pub =
+      n.advertise<std_msgs::double /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+          "turtle_control", 100);
 
   Matrix3d Kp;
 
