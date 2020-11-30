@@ -2,7 +2,7 @@
 <launch>
   <!--#>>>>TODO: LAUNCH A NODE TO PUBLISH AN STATIC TRANSFORMATION BETWEEN /map and /WORLD WITH A FREQ 100-->  
   <!--<node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"/>-->
-  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="1 0 0 0 0 0 1 link1_parent link1 100" />
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="1 0 0 0 0 0 1 /map /world 100"/>
   
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtle_vis)/launch/rvizConfigs/turtleTutorial.rviz"/>
 
