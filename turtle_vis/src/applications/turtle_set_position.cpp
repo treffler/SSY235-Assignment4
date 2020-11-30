@@ -113,9 +113,11 @@ int main(int argc, char **argv) {
     if (client.call(desired_pose_msg)) //#>>>>TODO:CALL THE CLIENT WITH
                                        // desired_pose_msg)
     {
-      ROS_INFO_STREAM(
-          "desired pose: "
-          /*<< desired_pose_msg*/); //#>>>>TODO:PRINT OUT THE MESSAGE);
+      ROS_INFO_STREAM("desired pose: x = "
+                      << desired_pose_msg.request.desiredPose.x << " y = "
+                      << desired_pose_msg.request.desiredPose.y << " theta = "
+                      << desired_pose_msg.request.desiredPose
+                             .theta); //#>>>>TODO:PRINT OUT THE MESSAGE);
     } else {
       ROS_ERROR_STREAM("Failed to call the service 'TurtlePose'");
       return 1;
