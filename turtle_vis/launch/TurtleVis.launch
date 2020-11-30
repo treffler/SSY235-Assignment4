@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <launch>
-  <!--#>>>>TODO: LAUNCH A NODE TO PUBLISH AN STATIC TRANSFORMATION BETWEEN /map and /WORLD WITH A FREQ 100-->  
-  <!--<node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"/>-->
+  <!-- LAUNCH A NODE TO PUBLISH AN STATIC TRANSFORMATION BETWEEN /map and /WORLD WITH A FREQ 100-->  
   <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 /map /world 100"/>
   
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtle_vis)/launch/rvizConfigs/turtleTutorial.rviz"/>
 
-  <!--#>>>>TODO:LAUNCH TURTLE VISUALIZATION NODE-->
+  <!-- LAUNCH TURTLE VISUALIZATION NODE-->
   <node name="turtle_vis" pkg="turtle_vis" type="turtle_vis_node"/>
 
-  <!--#>>>>TODO: load the yaml file control_param.yaml-->
+  <!-- load the yaml file control_param.yaml-->
   <rosparam file="$(find turtle_vis)/configs/control_param.yaml" />
   
-  <!--#>>>>TODO:LAUNCH TURTLE CONTROL NODE.-->
+  <!-- LAUNCH TURTLE CONTROL NODE.-->
   <node name="turtle_control" pkg="turtle_vis" type="turtle_control_node"/>  
 
 </launch>

@@ -20,7 +20,7 @@
 namespace turtleSpace {
 
 TurtleClass::TurtleClass() {
-  //#>>>>TODO: INITIALIZE MEMBER VARIABLES
+  // INITIALIZE MEMBER VARIABLES
   count_mutex_ = PTHREAD_MUTEX_INITIALIZER;
   turtlePose_ << 0, 0, 0;
   turtlePose_desired_ << 0, 0, 0;
@@ -28,8 +28,9 @@ TurtleClass::TurtleClass() {
 TurtleClass::~TurtleClass() {}
 
 void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg) {
+  
   pthread_mutex_lock(&count_mutex_);
-  //#>>>>TODO: COPY THE MSG TO A LOCAL VARIABLE
+  // COPY THE MSG TO A LOCAL VARIABLE
   turtlePose_(0) = msg->x;
   turtlePose_(1) = msg->y;
   turtlePose_(2) = msg->theta;
@@ -42,7 +43,7 @@ bool TurtleClass::getDPose(turtle_vis::send_desired_pose::Request &req,
                            turtle_vis::send_desired_pose::Response &res) {
 
   pthread_mutex_lock(&count_mutex_);
-  //#>>>>TODO:COPY THE REQUEST MSG TO A LOCAL VARIABLE
+  // COPY THE REQUEST MSG TO A LOCAL VARIABLE
   turtlePose_desired_(0) = req.desiredPose.x;
   turtlePose_desired_(1) = req.desiredPose.y;
   turtlePose_desired_(2) = req.desiredPose.theta;

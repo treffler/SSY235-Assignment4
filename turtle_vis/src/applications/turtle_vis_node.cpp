@@ -37,7 +37,7 @@
 /*********************************************************************
  * CUSTOM CLASS
  * ******************************************************************/
-//#>>>>TODO:INCLUDE TURTLE CLASS HEADER
+//INCLUDE TURTLE CLASS HEADER
 #include <turtle_vis/TurtleClass.h>
 
 int main(int argc, char **argv) {
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
   ros::Publisher turtle_marker_pub =
       n.advertise<visualization_msgs::Marker>("visualization_marker", 1);
 
-  ////#>>>>TODO:INSTANTIATE THE TURTLE CLASS WITH THE VARIABLE my_turtle;
+  //INSTANTIATE THE TURTLE CLASS WITH THE VARIABLE my_turtle;
   turtleSpace::TurtleClass my_turtle;
 
   visualization_msgs::Marker turtle3D;
@@ -73,11 +73,10 @@ int main(int argc, char **argv) {
   // OBJECT AND THE CALLBACK METHOD
   ros::Subscriber sub = n.subscribe(
       "turtle_control", 100,
-      &turtleSpace::TurtleClass::getPose /*//#>>>>TODO: DEFINE THE CALLBACK
-                                            FUNCTION FROM THE METHOD OF THE
-                                            CLASS*/
+      &turtleSpace::TurtleClass::getPose /*DEFINE THE CALLBACK FUNCTION FROM
+                                            THE METHOD OF THE CLASS*/
       ,
-      &my_turtle /*//#>>>>TODO: DEFINE THE INSTANCE OF THE CLASS*/);
+      &my_turtle /* DEFINE THE INSTANCE OF THE CLASS*/);
 
   tf::Quaternion qtf;
 
@@ -101,14 +100,13 @@ int main(int argc, char **argv) {
         tf::Vector3(turtlePose_local(0), turtlePose_local(1), 0));
 
     transform.setRotation(qtf);
-    ////#>>>>TODO:PUBLISH THE TF FOR THE TURTLE USING transform, parent, child,
-    /// and ros::Time::now()
+    //PUBLISH THE TF FOR THE TURTLE USING transform, parent, child, and ros::Time::now()
     br.sendTransform(
         tf::StampedTransform(transform, ros::Time::now(), "/world", "/turtle"));
 
-    ////#>>>>TODO:PUBLISH THE TURTLE MARKER
+    // PUBLISH THE TURTLE MARKER
     turtle_marker_pub.publish(
-        turtle3D /*//#>>>>TODO:USE THE MSG WITH TYPE MARKER*/);
+        turtle3D /*USE THE MSG WITH TYPE MARKER*/);
 
     ros::spinOnce();
 

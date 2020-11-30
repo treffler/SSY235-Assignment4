@@ -52,8 +52,7 @@ int main(int argc, char **argv) {
   turtleSpace::TurtleClass turtleF;
   ros::ServiceServer service = n.advertiseService(
       "TurtlePose",
-      &turtleSpace::TurtleClass::getDPose, //#>>>>TODO: DEFINE THE
-                                           // CALLBACK FUNCTION
+      &turtleSpace::TurtleClass::getDPose, //DEFINE THE CALLBACK FUNCTION
       &turtleF);
   // CALL SERVICE FROM TERMINAL//
   //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
@@ -62,7 +61,7 @@ int main(int argc, char **argv) {
 
   // Topic
   ros::Publisher desired_pose_pub =
-      n.advertise<turtle_vis::DesiredPose /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+      n.advertise<turtle_vis::DesiredPose /*DEFINE THE MSG TYPE*/>(
           "turtle_control", 100);
 
   Matrix3d Kp;
@@ -75,13 +74,13 @@ int main(int argc, char **argv) {
 
   double p = 0.0;
 
-  //#>>>>TODO: LOAD p_gain FROM THE ROS PARAMETER SERVER
+  //LOAD p_gain FROM THE ROS PARAMETER SERVER
 
   // LOAD p_gain FROM THE ROS PARAMETER SERVER
   if (ros::param::has(
-          "/control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER*/)) {
+          "/control_gain/p_gain" /*DEFINE PARAMETER*/)) {
     ros::param::get(
-        "/control_gain/p_gain" /*/#>>>>TODO: DEFINE PARAMETER, SAME AS LINE 88*/
+        "/control_gain/p_gain" /*DEFINE PARAMETER, SAME AS LINE 88*/
         ,
         p);
     ROS_INFO_STREAM("p gain= " << p);
@@ -105,13 +104,13 @@ int main(int argc, char **argv) {
 
   // Target
   Vector3d turtlePose_desired_local;
-  ////#>>>>TODO: INITIALIZE THE DESIRED POSE VARIABLE OF THE CLASS TURTLE
+  // INITIALIZE THE DESIRED POSE VARIABLE OF THE CLASS TURTLE
   turtleF.setLocalDesiredPose(turtlePose);
 
   turtlePose_desired_local = turtlePose;
 
   // CREATE A DESIRED POSE MSG VARIABLE
-  turtle_vis::DesiredPose desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
+  turtle_vis::DesiredPose desired_pose_msg; // DEFINE THE MSG TYPE
 
   while (ros::ok()) {
 
@@ -120,21 +119,21 @@ int main(int argc, char **argv) {
     // Delta Time
     dt = tf.toSec() - ti.toSec();
 
-    ////#>>>>TODO: Get Desired Pose from the class variable
+    //Get Desired Pose from the class variable
     turtlePose_desired_local = turtleF.getLocalDesiredPose();
 
     // Control
-    ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
+    // COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
     error = turtlePose_old - turtlePose_desired_local;
     turtleVel = -Kp * error;
 
-    ////#>>>>TODO:COMPUTE THE NEW TURTLE POSE
+    // COMPUTE THE NEW TURTLE POSE
     turtlePose = turtlePose_old + turtleVel * dt; // USE SIMPLE INTEGRATION
 
     turtleF.setLocalPose(turtlePose);
 
     // Publish Data
-    ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
+    // SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
     desired_pose_msg.x = turtlePose_desired_local(0);
     desired_pose_msg.y = turtlePose_desired_local(1);
     desired_pose_msg.theta = turtlePose_desired_local(2);
