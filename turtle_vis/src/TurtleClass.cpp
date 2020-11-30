@@ -22,16 +22,17 @@ namespace turtleSpace {
 TurtleClass::TurtleClass() {
   //#>>>>TODO: INITIALIZE MEMBER VARIABLES
   count_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-  turtlePose_ = new Vector3D(0.0, 0.0, 0.0);
-  turtlePose_desired_ = new Vector3D(0.0, 0.0, 0.0);
+  turtlePose_ << 0, 0, 0;
+  turtlePose_desired_ << 0, 0, 0;
 }
 TurtleClass::~TurtleClass() {}
 
 void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg) {
-  Vector3d local_msg;
   pthread_mutex_lock(&count_mutex_);
   //#>>>>TODO: COPY THE MSG TO A LOCAL VARIABLE
-  local_msg = msg;
+  turtlePose_(0) = msg->x;
+  turtlePose_(1) = msg->y;
+  turtlePose_(2) = msg->theta;
   pthread_mutex_unlock(&count_mutex_);
 
   ROS_INFO_STREAM("Vis Turtle Pose: " << turtlePose_.transpose());
@@ -39,12 +40,12 @@ void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg) {
 
 bool TurtleClass::getDPose(turtle_vis::send_desired_pose::Request &req,
                            turtle_vis::send_desired_pose::Response &res) {
-  Vector3d local_req; // correct data type???
-  int local_res;
+
   pthread_mutex_lock(&count_mutex_);
   //#>>>>TODO:COPY THE REQUEST MSG TO A LOCAL VARIABLE
-  local_req = req;
-  local_res = res;
+  turtlePose_desired_(0) = req.desiredPose.x;
+  turtlePose_desired_(1) = req.desiredPose.y;
+  turtlePose_desired_(2) = req.desiredPose.theta;
   pthread_mutex_unlock(&count_mutex_);
 
   ROS_INFO_STREAM("Desired Pose: " << turtlePose_desired_.transpose());

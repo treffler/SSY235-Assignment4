@@ -52,9 +52,8 @@ int main(int argc, char **argv) {
   turtleSpace::TurtleClass turtleF;
   ros::ServiceServer service = n.advertiseService(
       "TurtlePose",
-      &turtleSpace::TurtleClass::getDPose(), //#>>>>TODO: DEFINE THE
-                                             // CALLBACK FUNCTION -> correct
-                                             // function?
+      &turtleSpace::TurtleClass::getDPose, //#>>>>TODO: DEFINE THE
+                                           // CALLBACK FUNCTION
       &turtleF);
   // CALL SERVICE FROM TERMINAL//
   //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
@@ -63,7 +62,7 @@ int main(int argc, char **argv) {
 
   // Topic
   ros::Publisher desired_pose_pub =
-      n.advertise<turtle_vis::float64 /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
+      n.advertise<turtle_vis::DesiredPose /*#>>>>TODO: DEFINE THE MSG TYPE*/>(
           "turtle_control", 100);
 
   Matrix3d Kp;
@@ -112,7 +111,7 @@ int main(int argc, char **argv) {
   turtlePose_desired_local = turtlePose;
 
   // CREATE A DESIRED POSE MSG VARIABLE
-  turtle_vis::float64 desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
+  turtle_vis::DesiredPose desired_pose_msg; //#>>>>TODO:DEFINE THE MSG TYPE
 
   while (ros::ok()) {
 
@@ -136,7 +135,9 @@ int main(int argc, char **argv) {
 
     // Publish Data
     ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
-    desired_pose_msg.data = turtlePose_desired_local;
+    desired_pose_msg.x = turtlePose_desired_local(0);
+    desired_pose_msg.y = turtlePose_desired_local(1);
+    desired_pose_msg.theta = turtlePose_desired_local(2);
     desired_pose_pub.publish(desired_pose_msg);
 
     // SET THE HISTORY

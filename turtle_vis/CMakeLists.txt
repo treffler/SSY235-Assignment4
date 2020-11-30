@@ -11,7 +11,6 @@ add_compile_options(-Wno-dev -Wall -Wextra -Wpedantic)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
-    sensor_msgs
     std_msgs
     tf
     tf_conversions

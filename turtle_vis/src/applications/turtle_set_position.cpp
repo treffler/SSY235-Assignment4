@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
       "TurtlePose");
 
   ////#>>>>TODO: DEFINE A MSG VARIABLE FOR THE SERVICE MESSAGE
-  Vector3d desired_pose_msg;
+  turtle_vis::send_desired_pose desired_pose_msg;
 
   std::string keyb_in;
 
@@ -84,44 +84,44 @@ int main(int argc, char **argv) {
     ROS_INFO_STREAM("typed: " << keyb_in);
     ////#>>>>TODO:GET THE VALUES FROM THE TERMINAL AND SAVE THEM IN A LOCAL
     /// VARIABLE. YOU WILL GET X,Y AND THETA
-    std::string temp;
-    for (int i = 0; i < keyb_in.size(); i++) {
-      if (isdigit(keyb_in[i])) {
-        temp += keyb_in[i];
-      } else if (keyb_in[i] == ',') {
-        key_vals.push_back(atof(temp.c_str()));
-        temp = "";
-      }
+    char *writable = new char[keyb_in.size() + 1];
+    std::copy(keyb_in.begin(), keyb_in.end(), writable);
+    writable[keyb_in.size()] = '\0';
+    char *p = strtok(writable, ",");
+    while (p) {
+      key_vals.push_back(atof(p));
+      p = strtok(NULL, ",");
     }
-    key_vals.push_back(atof(temp.c_str()));
 
     ////#>>>>TODO:CREATE THE MESSAGE WITH THE LOCAL VARIABLE (desired_pose_msg)
-    desired_pose_msg.x = key_vals[0];
-    desired_pose_msg.y = key_vals[1];
-    desired_pose_msg.z = key_vals[2];
+    desired_pose_msg.request.desiredPose.x = key_vals[0];
+    desired_pose_msg.request.desiredPose.y = key_vals[1];
+    desired_pose_msg.request.desiredPose.theta = key_vals[2];
 
     ////#>>>>TODO:COMPUTE THE POSITION AND ORIENTATION OF THE TF FOR THE DESIRED
     /// POSITION
 
-        qtf.setRPY(0,0,////#>>>>TODO:USE THETA VARIABLE);
-        transform.setOrigin(tf::Vector3(/*//#>>>>TODO:USE X VARIABLE*/, /*//#>>>>TODO:USE Y VARIABLE*/, 0));
-        transform.setRotation(qtf);
+    qtf.setRPY(0, 0, key_vals[2]); ////#>>>>TODO:USE THETA VARIABLE);
+    transform.setOrigin(tf::Vector3(key_vals[0] /*//#>>>>TODO:USE X VARIABLE*/,
+                                    key_vals[1] /*//#>>>>TODO:USE Y VARIABLE*/,
+                                    0));
+    transform.setRotation(qtf);
 
-        br.sendTransform(tf::StampedTransform(
-                           transform,ros::Time::now(),
-                           "/world","/turtle_desired"));
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/world",
+                                          "/turtle_desired"));
 
-        if(//#>>>>TODO:CALL THE CLIENT WITH desired_pose_msg)
-        {
-            ROS_INFO_STREAM(//#>>>>TODO:PRINT OUT THE MESSAGE);
-        }
-        else
-        {
+    if (client.call(desired_pose_msg)) //#>>>>TODO:CALL THE CLIENT WITH
+                                       // desired_pose_msg)
+    {
+      ROS_INFO_STREAM(
+          "desired pose: "
+          /*<< desired_pose_msg*/); //#>>>>TODO:PRINT OUT THE MESSAGE);
+    } else {
       ROS_ERROR_STREAM("Failed to call the service 'TurtlePose'");
       return 1;
-        }
+    }
 
-        // delete[] writable;
+    delete[] writable;
   }
 
   return 0;
