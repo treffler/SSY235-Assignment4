@@ -11,7 +11,6 @@ add_compile_options(-Wno-dev -Wall -Wextra -Wpedantic)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
-    sensor_msgs
     std_msgs
     tf
     tf_conversions
@@ -30,24 +29,28 @@ add_definitions(${EIGEN_DEFINITIONS})
 # Messages, Services and Actions
 ##########################################################################
 ##>>>>TODO: Generate messages in the 'msg' folder
-#add_message_files(
-#    DIRECTORY msg
-#    FILES
-#     #>>>>TODO: ADD THE MSG FILES
-#    )
+add_message_files(
+    DIRECTORY msg
+    FILES
+    #>>>>TODO: ADD THE MSG FILES
+	# message for desired pose of the turtle
+	DesiredPose.msg
+    )
 ##>>>>TODO: Generate services in the 'srv' folder
-#add_service_files(
-#    DIRECTORY srv
-#    FILES
-#    #>>>>TODO: ADD THE SERVICE FILES
-#    )
+add_service_files(
+    DIRECTORY srv
+    FILES
+    #>>>>TODO: ADD THE SERVICE FILES
+	# service for sending desired pose
+	send_desired_pose.srv
+    )
 
 
 ##>>>>TODO:Generate added messages and services with any dependencies listed here
-#generate_messages(
-#    DEPENDENCIES
-#    std_msgs
-#    )
+generate_messages(
+    DEPENDENCIES
+    std_msgs
+    )
 
 
 ###################################
@@ -77,7 +80,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+#include_directories(include)
 include_directories(
     include
     ${catkin_INCLUDE_DIRS}
@@ -87,44 +90,44 @@ include_directories(
 # Sections Binaries (Libraries)
 ###########################################################################
 # >>>>TODO: Define the library target
-#add_library(turtle_ros_tutorial src/TurtleClass.cpp)
-#target_link_libraries(turtle_ros_tutorial ${catkin_LIBRARIES})
-#add_dependencies(turtle_ros_tutorial 
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS})
+add_library(turtle_ros_tutorial src/TurtleClass.cpp)
+target_link_libraries(turtle_ros_tutorial ${catkin_LIBRARIES})
+add_dependencies(turtle_ros_tutorial 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
 
 
 ###########################################################################
 # Sections Library Enable for Releases
 ###########################################################################
-#link_directories(${PROJECT_SOURCE_DIR}/lib)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
 
 ###########################################################################
 # Sections Binaries (C++ Exec)
 ###########################################################################
 ##>>>>TODO: enable executables
-#add_executable(turtle_vis_node src/applications/turtle_vis_node.cpp)
-#add_dependencies(turtle_vis_node 
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(turtle_vis_node
-#    ${catkin_LIBRARIES}
-#    turtle_ros_tutorial)
+add_executable(turtle_vis_node src/applications/turtle_vis_node.cpp)
+add_dependencies(turtle_vis_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(turtle_vis_node
+    ${catkin_LIBRARIES}
+    turtle_ros_tutorial)
 
-#add_executable(turtle_control_node src/applications/turtle_control_node.cpp)
-#add_dependencies(turtle_control_node 
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(turtle_control_node
-#    ${catkin_LIBRARIES}
-#    turtle_ros_tutorial)
+add_executable(turtle_control_node src/applications/turtle_control_node.cpp)
+add_dependencies(turtle_control_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(turtle_control_node
+    ${catkin_LIBRARIES}
+    turtle_ros_tutorial)
 
-#add_executable(turtle_set_position_node src/applications/turtle_set_position.cpp)
-#add_dependencies(turtle_set_position_node
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(turtle_set_position_node
-#    ${catkin_LIBRARIES})
+add_executable(turtle_set_position_node src/applications/turtle_set_position.cpp)
+add_dependencies(turtle_set_position_node
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(turtle_set_position_node
+    ${catkin_LIBRARIES})
 
 
 
@@ -134,18 +137,18 @@ include_directories(
 
 ## C++ executables
 ##>>>>TODO: Uncomment these lines
-#install(TARGETS
-#    turtle_vis_node
-#    turtle_control_node
-#    turtle_set_position_node
-#    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(TARGETS
+    turtle_vis_node
+    turtle_control_node
+    turtle_set_position_node
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ##>>>>TODO: Uncomment these lines
 ## Libraries
-#install(TARGETS turtle_ros_tutorial
-#    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
+install(TARGETS turtle_ros_tutorial
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 
 ## Header files
 install(DIRECTORY include/${PROJECT_NAME}/

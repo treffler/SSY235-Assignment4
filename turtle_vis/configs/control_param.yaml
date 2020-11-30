@@ -1,4 +1,5 @@
 # Gains for the turtle visualization
 control_gain:
   #Proportional gain
-  p_gain:#//>>>>TODO: Define a value for the p gain
+  p_gain: 1.0 #//>>>>TODO: Define a value for the p gain
+  # TODO: tune gain
