@@ -1,13 +1,31 @@
-1) roslaunch turtle_vis TurtleVis.launch
+Runing the implementation
+1)  roscore
+
+2) To launch the nodes in a new terminal type:
+    roslaunch turtle_vis TurtleVis.launch
  
-2) rosservice call /TurtlePose "p:
+3) To move the turtle, run the following command a new terminal:
+
+    rosrun turtle_vis turtle_set_position_node
+
+   Then, enter the desired pose in the terminal in units (cm, cm, rad) e.g. 1,2,0
+
+------------------------------------------------
+Runing nodes / services individually for testing:
+
+To test the service run:
+    rosservice call /TurtlePose "p:
   	x: 2.0
   	y: 2.0
-  	theta: 1.57"   
+  	theta: 1.57"  
 
-3) rosrun turtle_vis turtle_set_position_node
-(cm, cm, rad)
+To test the control node run:
+    rosrun turtle_vis turtle_control_node
 
+To test the visualisation node run:
+    rosrun turtle_vis turtle_vis_node
+
+------------------------------------------------
 
 Exercise 3:
 1)  How can I send the new desired pose of the turtle (x_d, y_d, theta_d) to Node1?
