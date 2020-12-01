@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
   turtleSpace::TurtleClass turtleF;
   ros::ServiceServer service = n.advertiseService(
       "TurtlePose",
-      &turtleSpace::TurtleClass::getDPose, //DEFINE THE CALLBACK FUNCTION
+      &turtleSpace::TurtleClass::getDPose, // DEFINE THE CALLBACK FUNCTION
       &turtleF);
   // CALL SERVICE FROM TERMINAL//
   //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
@@ -74,15 +74,13 @@ int main(int argc, char **argv) {
 
   double p = 0.0;
 
-  //LOAD p_gain FROM THE ROS PARAMETER SERVER
+  // LOAD p_gain FROM THE ROS PARAMETER SERVER
 
   // LOAD p_gain FROM THE ROS PARAMETER SERVER
-  if (ros::param::has(
-          "/control_gain/p_gain" /*DEFINE PARAMETER*/)) {
-    ros::param::get(
-        "/control_gain/p_gain" /*DEFINE PARAMETER, SAME AS LINE 88*/
-        ,
-        p);
+  if (ros::param::has("/control_gain/p_gain" /*DEFINE PARAMETER*/)) {
+    ros::param::get("/control_gain/p_gain" /*DEFINE PARAMETER, SAME AS LINE 88*/
+                    ,
+                    p);
     ROS_INFO_STREAM("p gain= " << p);
   } else {
     ROS_ERROR_STREAM("param: control_gain/p_gain, doesn't exist");
@@ -119,7 +117,7 @@ int main(int argc, char **argv) {
     // Delta Time
     dt = tf.toSec() - ti.toSec();
 
-    //Get Desired Pose from the class variable
+    // Get Desired Pose from the class variable
     turtlePose_desired_local = turtleF.getLocalDesiredPose();
 
     // Control
@@ -134,9 +132,9 @@ int main(int argc, char **argv) {
 
     // Publish Data
     // SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
-    desired_pose_msg.x = turtlePose_desired_local(0);
-    desired_pose_msg.y = turtlePose_desired_local(1);
-    desired_pose_msg.theta = turtlePose_desired_local(2);
+    desired_pose_msg.x = turtlePose(0);
+    desired_pose_msg.y = turtlePose(1);
+    desired_pose_msg.theta = turtlePose(2);
     desired_pose_pub.publish(desired_pose_msg);
 
     // SET THE HISTORY
